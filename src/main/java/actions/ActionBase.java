@@ -61,8 +61,9 @@ public abstract class ActionBase {
             //パラメータからcommandを取得
             String command = request.getParameter(ForwardConst.CMD.getValue());
 
-            //ommandに該当するメソッドを実行する
+            //commandに該当するメソッドを実行する
             //(例: action=Employee command=show の場合 EmployeeActionクラスのshow()メソッドを実行する)
+            //ここは一回飛ばす
             commandMethod = this.getClass().getDeclaredMethod(command, new Class[0]);
             commandMethod.invoke(this, new Object[0]); //メソッドに渡す引数はなし
 
@@ -86,6 +87,7 @@ public abstract class ActionBase {
     protected void forward(ForwardConst target) throws ServletException, IOException {
 
         //jspファイルの相対パスを作成
+        //forward = "/WEB-INF/views/   target.getValue()   s.jsp"と同じ
         String forward = String.format("/WEB-INF/views/%s.jsp", target.getValue());
         RequestDispatcher dispatcher = request.getRequestDispatcher(forward);
 

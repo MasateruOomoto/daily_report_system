@@ -32,6 +32,7 @@ public class FrontController extends HttpServlet {
             throws ServletException, IOException {
 
         //パラメータに該当するActionクラスのインスタンス
+        //下に記述してあるgetActionメソッドを使ってインスタンスを生成
         ActionBase action = getAction(request, response);
 
         //サーブレットコンテキスト、リクエスト、レスポンスをActionインスタンスのフィールドに設定
@@ -63,10 +64,15 @@ public class FrontController extends HttpServlet {
         ActionBase action = null;
         try {
 
-            //リクエストからパラメータ"action"の値を取得 (例:"Employee"、"Report")
+            //リクエストから"value="の右側にあるパラメータ"action"の値を取得 (例:"Employee"、"Report")
+            //action=Employeeの場合, actionString = "Employee"になる。
             String actionString = request.getParameter(ForwardConst.ACT.getValue());
 
             //該当するActionオブジェクトを作成 (例:リクエストからパラメータ action=Employee の場合、actions.EmployeeActionオブジェクト)
+            /*
+             * 下の%の部分にactionString = "Employee"が代入され, Class.forName("actions.EmployeeAction")となり,
+             * actions.EmployeeActionオブジェクトを作成しtypeに代入
+            */
             type = Class.forName(String.format("actions.%sAction", actionString));
 
             //ActionBaseのオブジェクトにキャスト(例:actions.EmployeeActionオブジェクト→actions.ActionBaseオブジェクト)
@@ -79,6 +85,8 @@ public class FrontController extends HttpServlet {
 
             //リクエストパラメータに設定されている"action"の値が不正の場合(例:action=xxxxx 等、該当するActionクラスがない場合)
             //エラー処理を行うActionオブジェクトを作成
+            e.printStackTrace();
+            //上でactionに代入するときにActionBaseのtypeをキャストしているのにここではキャストしなくてもいいのか？
             action = new UnknownAction();
         }
         return action;

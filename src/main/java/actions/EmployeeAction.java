@@ -43,8 +43,9 @@ public class EmployeeAction extends ActionBase {
      */
     public void index() throws ServletException, IOException {
 
-        //指定されたページ数の一覧画面に表示するデータを取得
+        //ページ数を決定し
         int page = getPage();
+        //指定されたページ数の一覧画面に表示するデータを取得
         List<EmployeeView> employees = service.getPerPage(page);
 
         //全ての従業員データの件数を取得
@@ -92,13 +93,15 @@ public class EmployeeAction extends ActionBase {
         if (checkToken()) {
 
             //パラメータの値を元に従業員情報のインスタンスを作成する
+            //newjsp(_form.jsp)で入力され, RequestParamに保存されている情報をVIEWモデルのインスタンスに記入
+            //idと登録日時, 更新日時は自動で入力される
             EmployeeView ev = new EmployeeView(
                     null,
                     getRequestParam(AttributeConst.EMP_CODE),
                     getRequestParam(AttributeConst.EMP_NAME),
                     getRequestParam(AttributeConst.EMP_PASS),
                     toNumber(getRequestParam(AttributeConst.EMP_ADMIN_FLG)),
-                    null,
+                    null,//
                     null,
                     AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
 
@@ -122,6 +125,7 @@ public class EmployeeAction extends ActionBase {
                 //登録中にエラーがなかった場合
 
                 //セッションに登録完了のフラッシュメッセージを設定
+                //セッションに"flush"の名前で"登録が完了しました"という文章を登録
                 putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
 
                 //一覧画面にリダイレクト
@@ -148,7 +152,7 @@ public class EmployeeAction extends ActionBase {
             return;
         }
 
-        putRequestScope(AttributeConst.EMPLOYEE, ev); //取得した従業員情報
+        putRequestScope(AttributeConst.EMPLOYEE, ev); //取得した従業員情報をRequestScopeにセット
 
         //詳細画面を表示
         forward(ForwardConst.FW_EMP_SHOW);

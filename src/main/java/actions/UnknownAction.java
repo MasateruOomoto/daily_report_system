@@ -19,6 +19,7 @@ public class UnknownAction extends ActionBase {
     public void process() throws ServletException, IOException {
 
         //エラー画面を表示
+        //forwardを使って, error/unknown(FW_ERR_UNKNOWN)のjspを開く(表示)
         forward(ForwardConst.FW_ERR_UNKNOWN);
 
     }
