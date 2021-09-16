@@ -205,9 +205,11 @@ public class EmployeeService extends ServiceBase {
     public Boolean validateLogin(String code, String plainPass, String pepper) {
 
         boolean isValidEmployee = false;
+        //社員番号とパスワードが両方とも存在しているとき(前のページで入力されているとき)に実行
         if (code != null && !code.equals("") && plainPass != null && !plainPass.equals("")) {
             EmployeeView ev = findOne(code, plainPass, pepper);
 
+            //上のevでちゃんと社員番号とパスワードに合ったデータがとれていたら
             if (ev != null && ev.getId() != null) {
 
                 //データが取得できた場合、認証成功
