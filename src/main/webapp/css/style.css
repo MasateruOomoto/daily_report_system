@@ -69,6 +69,27 @@ button {
 #footer {
     text-align: center;
 }
+
+#flush_success {
+    width: 100%;
+    padding-top: 28px;
+    padding-left: 2%;
+    padding-bottom: 28px;
+    margin-bottom: 15px;
+    color: #155724;
+    background-color: #d4edda;
+}
+
+#flush_error {
+    width: 100%;
+    padding-top: 28px;
+    padding-left: 2%;
+    padding-bottom: 28px;
+    margin-bottom: 15px;
+    color: #721c24;
+    background-color: #f8d7da;
+}
+
 table#employee_list th {
     width: 30%;
     padding: 10px 2%;
@@ -85,9 +106,11 @@ tr.row1 {
 tr.row0 {
         background-color: #ffffff;
 }
+
 select {
     height: 30px;
 }
+
 #header_menu {
     width: 57%;
     padding-top: 17px;
