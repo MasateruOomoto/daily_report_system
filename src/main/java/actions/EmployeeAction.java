@@ -177,8 +177,8 @@ public class EmployeeAction extends ActionBase {
      */
     public void edit() throws ServletException, IOException {
 
-        //管理者かどうかのチェック //追記
-        if (checkAdmin()) { //追記
+        //管理者かどうかのチェック
+        if (checkAdmin()) {
 
             //idを条件に従業員データを取得する
             EmployeeView ev = service.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
@@ -196,7 +196,7 @@ public class EmployeeAction extends ActionBase {
             //編集画面を表示する
             forward(ForwardConst.FW_EMP_EDIT);
 
-        } //追記
+        }
     }
 
     /**
@@ -254,7 +254,7 @@ public class EmployeeAction extends ActionBase {
     public void destroy() throws ServletException, IOException {
 
         //CSRF対策 tokenのチェック
-        if (checkAdmin() && checkToken()) { //追記
+        if (checkAdmin() && checkToken()) {
 
             //idを条件に従業員データを論理削除する
             service.destroy(toNumber(getRequestParam(AttributeConst.EMP_ID)));
@@ -276,6 +276,7 @@ public class EmployeeAction extends ActionBase {
     private boolean checkAdmin() throws ServletException, IOException {
 
         //セッションからログイン中の従業員情報を取得
+
         EmployeeView ev = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
 
         //管理者でなければエラー画面を表示
