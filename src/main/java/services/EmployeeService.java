@@ -23,11 +23,18 @@ public class EmployeeService extends ServiceBase {
      * @return 表示するデータのリスト
      */
     public List<EmployeeView> getPerPage(int page) {
+        /*
+         * setFirstResultで始まりのデータ番号を指定し,
+         * setMaxResulsでそこから合計いくつのデータを取得するか決め,
+         * gerResultListでListに詰めて,
+         * employeesに代入
+         */
         List<Employee> employees = em.createNamedQuery(JpaConst.Q_EMP_GET_ALL, Employee.class)
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
 
+        //DTOモデルをVIEWモデルに変えるて返す
         return EmployeeConverter.toViewList(employees);
     }
 
@@ -114,6 +121,7 @@ public class EmployeeService extends ServiceBase {
 
         //バリデーションエラーがなければデータを登録する
         if (errors.size() == 0) {
+            //下にメソッドが書いてある
             create(ev);
         }
 
@@ -209,7 +217,7 @@ public class EmployeeService extends ServiceBase {
         if (code != null && !code.equals("") && plainPass != null && !plainPass.equals("")) {
             EmployeeView ev = findOne(code, plainPass, pepper);
 
-            //上のevでちゃんと社員番号とパスワードに合ったデータがとれていたら
+            //上のevでちゃんと社員番号とパスワードに合ったデータ(データ番号)がとれていたら
             if (ev != null && ev.getId() != null) {
 
                 //データが取得できた場合、認証成功
@@ -239,6 +247,7 @@ public class EmployeeService extends ServiceBase {
      */
     private void create(EmployeeView ev) {
 
+        //コンバータを使いVIEWモデルからDTOモデルに変換し,コミット
         em.getTransaction().begin();
         em.persist(EmployeeConverter.toModel(ev));
         em.getTransaction().commit();

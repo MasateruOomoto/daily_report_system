@@ -45,6 +45,7 @@ public abstract class ActionBase {
      * @throws ServletException
      * @throws IOException
      */
+    //Overrideしている
     public abstract void process() throws ServletException, IOException;
 
     /**
@@ -63,8 +64,8 @@ public abstract class ActionBase {
 
             //commandに該当するメソッドを実行する
             //(例: action=Employee command=show の場合 EmployeeActionクラスのshow()メソッドを実行する)
-            //ここは一回飛ばす
             commandMethod = this.getClass().getDeclaredMethod(command, new Class[0]);
+            //ここにのinvokeは上のinvokeとは違う。
             commandMethod.invoke(this, new Object[0]); //メソッドに渡す引数はなし
 
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
@@ -87,7 +88,6 @@ public abstract class ActionBase {
     protected void forward(ForwardConst target) throws ServletException, IOException {
 
         //jspファイルの相対パスを作成
-        //forward = "/WEB-INF/views/   target.getValue()   s.jsp"と同じ
         String forward = String.format("/WEB-INF/views/%s.jsp", target.getValue());
         RequestDispatcher dispatcher = request.getRequestDispatcher(forward);
 
@@ -107,6 +107,8 @@ public abstract class ActionBase {
             throws ServletException, IOException {
 
         //URLを構築
+        //結果的には/daily_report_system/?action=Employee&command=show!"のような感じになる
+        //getContextPath()で自動的にコンテキストパスの/daily_report_systemが記述される
         String redirectUrl = request.getContextPath() + "/?action=" + action.getValue();
         if (command != null) {
             redirectUrl = redirectUrl + "&command=" + command.getValue();
@@ -126,6 +128,7 @@ public abstract class ActionBase {
     protected boolean checkToken() throws ServletException, IOException {
 
         //パラメータからtokenの値を取得
+        //不正アクセスしてたらtokenはnullになってるか違う値が設定されている
         String _token = getRequestParam(AttributeConst.TOKEN);
 
         if (_token == null || !(_token.equals(getTokenId()))) {

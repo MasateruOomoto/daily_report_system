@@ -26,10 +26,10 @@ public class EmployeeAction extends ActionBase {
      */
     @Override
     public void process() throws ServletException, IOException {
-
+        //データベースを操作するインスタンスを生成
         service = new EmployeeService();
 
-        //メソッドを実行
+        //commandの値から
         invoke();
 
         service.close();
@@ -42,8 +42,8 @@ public class EmployeeAction extends ActionBase {
      */
     public void index() throws ServletException, IOException {
 
-        //管理者かどうかのチェック //追記
-        if (checkAdmin()) { //追記
+        //管理者かどうかのチェック
+        if (checkAdmin()) {
 
             //指定されたページ数の一覧画面に表示するデータを取得
             int page = getPage();
@@ -52,6 +52,7 @@ public class EmployeeAction extends ActionBase {
             //全ての従業員データの件数を取得
             long employeeCount = service.countAll();
 
+            //RequestScopeに以下の名前でemployeesやemployeeCountの情報を保存する
             putRequestScope(AttributeConst.EMPLOYEES, employees); //取得した従業員データ
             putRequestScope(AttributeConst.EMP_COUNT, employeeCount); //全ての従業員データの件数
             putRequestScope(AttributeConst.PAGE, page); //ページ数
@@ -67,7 +68,7 @@ public class EmployeeAction extends ActionBase {
             //一覧画面を表示
             forward(ForwardConst.FW_EMP_INDEX);
 
-        } //追記
+        }
 
     }
 
@@ -78,14 +79,14 @@ public class EmployeeAction extends ActionBase {
      */
     public void entryNew() throws ServletException, IOException {
 
-        //管理者かどうかのチェック //追記
-        if (checkAdmin()) { //追記
+        //管理者かどうかのチェック
+        if (checkAdmin()) {
             putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
             putRequestScope(AttributeConst.EMPLOYEE, new EmployeeView()); //空の従業員インスタンス
 
             //新規登録画面を表示
             forward(ForwardConst.FW_EMP_NEW);
-        } //追記
+        }
     }
 
     /**
@@ -96,9 +97,10 @@ public class EmployeeAction extends ActionBase {
     public void create() throws ServletException, IOException {
 
         //CSRF対策 tokenのチェック
-        if (checkAdmin() && checkToken()) { //追記
+        if (checkAdmin() && checkToken()) {
 
             //パラメータの値を元に従業員情報のインスタンスを作成する
+            //IDと登録日時, 更新日時はあとで入力なのでnull
             EmployeeView ev = new EmployeeView(
                     null,
                     getRequestParam(AttributeConst.EMP_CODE),
@@ -113,6 +115,7 @@ public class EmployeeAction extends ActionBase {
             String pepper = getContextScope(PropertyConst.PEPPER);
 
             //従業員情報登録
+            //evにpepperでハッシュ化したパスワードとID,登録日時と更新日時を加えてDBに登録
             List<String> errors = service.create(ev, pepper);
 
             if (errors.size() > 0) {
@@ -145,8 +148,9 @@ public class EmployeeAction extends ActionBase {
      */
     public void show() throws ServletException, IOException {
 
-        //管理者かどうかのチェック //追記
-        if (checkAdmin()) { //追記
+        //管理者かどうかのチェック
+        //下に記述メソッドでtrueかfalseかを返している
+        if (checkAdmin()) {
 
             //idを条件に従業員データを取得する
             EmployeeView ev = service.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
@@ -203,7 +207,7 @@ public class EmployeeAction extends ActionBase {
     public void update() throws ServletException, IOException {
 
         //CSRF対策 tokenのチェック
-        if (checkAdmin() && checkToken()) { //追記
+        if (checkAdmin() && checkToken()) {
             //パラメータの値を元に従業員情報のインスタンスを作成する
             EmployeeView ev = new EmployeeView(
                     toNumber(getRequestParam(AttributeConst.EMP_ID)),
