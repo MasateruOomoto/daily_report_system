@@ -27,6 +27,15 @@
 <input type="password" name="${AttributeConst.EMP_PASS.getValue()}" />
 <br /><br />
 
+
+<label for="${AttributeConst.EMP_DEPARTMENT_NUMBER.getValue()}">所属部署</label><br />
+<select name="${AttributeConst.EMP_DEPARTMENT_NUMBER.getValue()}">
+    <option value="2">総務部</option>
+    <option value="3">開発部</option>
+    <option value="4">営業部</option>
+</select>
+<br /><br />
+
 <label for="${AttributeConst.EMP_ADMIN_FLG.getValue()}">権限</label><br />
 <select name="${AttributeConst.EMP_ADMIN_FLG.getValue()}">
     <option value="${AttributeConst.ROLE_GENERAL.getIntegerValue()}"<c:if test="${employee.adminFlag == AttributeConst.ROLE_GENERAL.getIntegerValue()}"> selected</c:if>>一般</option>

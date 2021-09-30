@@ -32,6 +32,7 @@ public enum AttributeConst {
     EMP_PASS("password"),
     EMP_NAME("name"),
     EMP_ADMIN_FLG("admin_flag"),
+    EMP_DEPARTMENT_NUMBER("department_number"),
 
     //管理者フラグ
     ROLE_ADMIN(1),

@@ -57,4 +57,9 @@ public class EmployeeView {
      */
     private Integer deleteFlag;
 
+    /**
+     * 所属部署
+     */
+    private String departmentNumber;
+
 }

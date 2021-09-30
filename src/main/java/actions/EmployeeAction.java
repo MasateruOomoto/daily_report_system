@@ -44,7 +44,6 @@ public class EmployeeAction extends ActionBase {
 
         //管理者かどうかのチェック
         if (checkAdmin()) {
-
             //指定されたページ数の一覧画面に表示するデータを取得
             int page = getPage();
             List<EmployeeView> employees = service.getPerPage(page);
@@ -67,9 +66,7 @@ public class EmployeeAction extends ActionBase {
 
             //一覧画面を表示
             forward(ForwardConst.FW_EMP_INDEX);
-
         }
-
     }
 
     /**
@@ -109,7 +106,8 @@ public class EmployeeAction extends ActionBase {
                     toNumber(getRequestParam(AttributeConst.EMP_ADMIN_FLG)),
                     null,
                     null,
-                    AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
+                    AttributeConst.DEL_FLAG_FALSE.getIntegerValue(),
+                    getRequestParam(AttributeConst.EMP_DEPARTMENT_NUMBER));
 
             //アプリケーションスコープからpepper文字列を取得
             String pepper = getContextScope(PropertyConst.PEPPER);
@@ -217,7 +215,8 @@ public class EmployeeAction extends ActionBase {
                     toNumber(getRequestParam(AttributeConst.EMP_ADMIN_FLG)),
                     null,
                     null,
-                    AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
+                    AttributeConst.DEL_FLAG_FALSE.getIntegerValue(),
+                    getRequestParam(AttributeConst.EMP_DEPARTMENT_NUMBER));
 
             //アプリケーションスコープからpepper文字列を取得
             String pepper = getContextScope(PropertyConst.PEPPER);

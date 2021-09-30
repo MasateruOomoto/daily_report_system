@@ -94,4 +94,10 @@ public class Employee {
     @Column(name = JpaConst.EMP_COL_DELETE_FLAG, nullable = false)
     private Integer deleteFlag;
 
+    /**
+     * 所属部署
+     */
+    @Column(name = JpaConst.EMP_COL_DEPARTMENT_NUMBER, nullable = false)
+    private String departmentNumber;
+
 }
