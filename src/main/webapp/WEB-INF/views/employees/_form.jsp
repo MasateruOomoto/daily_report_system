@@ -30,9 +30,9 @@
 
 <label for="${AttributeConst.EMP_DEPARTMENT_NUMBER.getValue()}">所属部署</label><br />
 <select name="${AttributeConst.EMP_DEPARTMENT_NUMBER.getValue()}">
-    <option value="2">総務部</option>
-    <option value="3">開発部</option>
-    <option value="4">営業部</option>
+    <option value="2"<c:if test="${employee.departmentNumber == 2}"> selected</c:if>>総務部</option>
+    <option value="3"<c:if test="${employee.departmentNumber == 3}"> selected</c:if>>開発部</option>
+    <option value="4"<c:if test="${employee.departmentNumber == 4}"> selected</c:if>>営業部</option>
 </select>
 <br /><br />
 
