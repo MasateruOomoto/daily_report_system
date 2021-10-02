@@ -33,6 +33,20 @@
             </div>
             <c:if test="${sessionScope.login_employee != null}">
                 <div id="employee_name">
+                    <c:choose>
+                        <c:when test="${sessionScope.login_employee.departmentNumber == AttributeConst.HUMAN_RESOURSES_DEPARTMENT.getValue()}">
+                            人事部
+                        </c:when>
+                        <c:when test="${sessionScope.login_employee.departmentNumber == AttributeConst.GENERAL_AFFAIRS_DEPARTMENT.getValue()}">
+                            総務部
+                        </c:when>
+                        <c:when test="${sessionScope.login_employee.departmentNumber == AttributeConst.DEVELOPMENT_DEPARTMENT.getValue()}">
+                            開発部
+                        </c:when>
+                        <c:when test="${sessionScope.login_employee.departmentNumber == AttributeConst.SALES_DEPARTMENT.getValue()}">
+                            営業部
+                        </c:when>
+                    </c:choose>&nbsp;
                     <c:out value="${sessionScope.login_employee.name}" />
                     &nbsp;さん&nbsp;&nbsp;&nbsp;
                     <a href="<c:url value='?action=${actAuth}&command=${commOut}' />">ログアウト</a>
