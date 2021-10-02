@@ -49,7 +49,13 @@ public enum AttributeConst {
     REP_ID("id"),
     REP_DATE("report_date"),
     REP_TITLE("title"),
-    REP_CONTENT("content");
+    REP_CONTENT("content"),
+
+    //所属部署
+    HUMAN_RESOURSES_DEPARTMENT("1"),
+    GENERAL_AFFAIRS_DEPARTMENT("2"),
+    DEVELOPMENT_DEPARTMENT("3"),
+    SALES_DEPARTMENT("4");
 
     private final String text;
     private final Integer i;
