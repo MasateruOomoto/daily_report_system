@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="constants.ForwardConst" %>
+<%@ page import="constants.AttributeConst" %>
 
 <c:set var="actTop" value="${ForwardConst.ACT_TOP.getValue()}" />
 <c:set var="actEmp" value="${ForwardConst.ACT_EMP.getValue()}" />
@@ -18,7 +19,22 @@
                 <c:out value="${flush}"></c:out>
             </div>
         </c:if>
-        <h3>【所属部署の日報　一覧】</h3>
+        <h3>
+            <c:choose>
+                <c:when test="${sessionScope.login_employee.departmentNumber == AttributeConst.HUMAN_RESOURSES_DEPARTMENT.getValue()}">
+                    【人事部日報　一覧】
+                </c:when>
+                <c:when test="${sessionScope.login_employee.departmentNumber == AttributeConst.GENERAL_AFFAIRS_DEPARTMENT.getValue()}">
+                    【総務部日報　一覧】
+                </c:when>
+                <c:when test="${sessionScope.login_employee.departmentNumber == AttributeConst.DEVELOPMENT_DEPARTMENT.getValue()}">
+                    【開発部日報　一覧】
+                </c:when>
+                <c:when test="${sessionScope.login_employee.departmentNumber == AttributeConst.SALES_DEPARTMENT.getValue()}">
+                    【営業部日報　一覧】
+                </c:when>
+            </c:choose>
+        </h3>
         <table id="report_list">
             <tbody>
                 <tr>

@@ -87,6 +87,21 @@ public class EmployeeConverter {
     }
 
     /**
+     * ViewモデルのリストからMTOモデルのリストを作成する
+     * @param list Viewモデルのリスト
+     * @return DTOモデルのリスト
+     */
+    public static List<Employee> toModelList(List<EmployeeView> list) {
+        List<Employee> es = new ArrayList<>();
+
+        for (EmployeeView ev : list) {
+            es.add(toModel(ev));
+        }
+
+        return es;
+    }
+
+    /**
      * Viewモデルの全フィールドの内容をDTOモデルのフィールドにコピーする
      * @param e DTOモデル(コピー先)
      * @param ev Viewモデル(コピー元)
@@ -100,7 +115,6 @@ public class EmployeeConverter {
         e.setCreatedAt(ev.getCreatedAt());
         e.setUpdatedAt(ev.getUpdatedAt());
         e.setDeleteFlag(ev.getDeleteFlag());
-        e.setDepartmentNumber(ev.getDepartmentNumber());
 
     }
 

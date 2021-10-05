@@ -7,6 +7,7 @@
 <c:set var="actEmp" value="${ForwardConst.ACT_EMP.getValue()}" />
 <c:set var="actRep" value="${ForwardConst.ACT_REP.getValue()}" />
 <c:set var="actAuth" value="${ForwardConst.ACT_AUTH.getValue()}" />
+<c:set var="actDep" value="${ForwardConst.ACT_DEP.getValue()}" />
 
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commOut" value="${ForwardConst.CMD_LOGOUT.getValue()}" />
@@ -29,6 +30,22 @@
                         <a href="<c:url value='?action=${actEmp}&command=${commIdx}' />">従業員管理</a>&nbsp;
                     </c:if>
                     <a href="<c:url value='?action=${actRep}&command=${commIdx}' />">日報管理</a>&nbsp;
+                    <a href="<c:url value='?action=${actDep}&command=${commIdx}' />">
+                        <c:choose>
+                            <c:when test="${sessionScope.login_employee.departmentNumber == AttributeConst.HUMAN_RESOURSES_DEPARTMENT.getValue()}">
+                                人事部日報管理
+                            </c:when>
+                            <c:when test="${sessionScope.login_employee.departmentNumber == AttributeConst.GENERAL_AFFAIRS_DEPARTMENT.getValue()}">
+                                総務部日報管理
+                            </c:when>
+                            <c:when test="${sessionScope.login_employee.departmentNumber == AttributeConst.DEVELOPMENT_DEPARTMENT.getValue()}">
+                                開発部日報管理
+                            </c:when>
+                            <c:when test="${sessionScope.login_employee.departmentNumber == AttributeConst.SALES_DEPARTMENT.getValue()}">
+                                営業部日報管理
+                            </c:when>
+                        </c:choose>
+                    </a>&nbsp;
                 </c:if>
             </div>
             <c:if test="${sessionScope.login_employee != null}">
@@ -47,7 +64,6 @@
                             営業部
                         </c:when>
                     </c:choose>&nbsp;
-                    <c:out value="${sessionScope.login_employee.departmentNumber}" />
                     <c:out value="${sessionScope.login_employee.name}" />
                     &nbsp;さん&nbsp;&nbsp;&nbsp;
                     <a href="<c:url value='?action=${actAuth}&command=${commOut}' />">ログアウト</a>

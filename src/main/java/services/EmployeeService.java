@@ -34,7 +34,7 @@ public class EmployeeService extends ServiceBase {
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
 
-        //DTOモデルをVIEWモデルに変えるて返す
+        //DTOモデルをVIEWモデルに変えて返す
         return EmployeeConverter.toViewList(employees);
     }
 

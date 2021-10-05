@@ -24,6 +24,25 @@
                     <td><c:out value="${employee.name}" /></td>
                 </tr>
                 <tr>
+                    <th>所属部署</th>
+                    <td>
+                        <c:choose>
+                            <c:when test="${employee.departmentNumber == AttributeConst.HUMAN_RESOURSES_DEPARTMENT.getValue()}">
+                                人事部
+                            </c:when>
+                            <c:when test="${employee.departmentNumber == AttributeConst.GENERAL_AFFAIRS_DEPARTMENT.getValue()}">
+                                総務部
+                            </c:when>
+                            <c:when test="${employee.departmentNumber == AttributeConst.DEVELOPMENT_DEPARTMENT.getValue()}">
+                                開発部
+                            </c:when>
+                            <c:when test="${employee.departmentNumber == AttributeConst.SALES_DEPARTMENT.getValue()}">
+                                営業部
+                            </c:when>
+                        </c:choose>
+                    </td>
+                </tr>
+                <tr>
                     <th>権限</th>
                     <td><c:choose>
                             <c:when test="${employee.adminFlag == AttributeConst.ROLE_ADMIN.getIntegerValue()}">管理者</c:when>

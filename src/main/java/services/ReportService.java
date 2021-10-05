@@ -8,6 +8,7 @@ import actions.views.EmployeeView;
 import actions.views.ReportConverter;
 import actions.views.ReportView;
 import constants.JpaConst;
+import models.Employee;
 import models.Report;
 import models.validators.ReportValidator;
 
@@ -41,6 +42,44 @@ public class ReportService extends ServiceBase {
 
         long count = (long) em.createNamedQuery(JpaConst.Q_REP_COUNT_ALL_MINE, Long.class)
                 .setParameter(JpaConst.JPQL_PARM_EMPLOYEE, EmployeeConverter.toModel(employee))
+                .getSingleResult();
+
+        return count;
+    }
+
+    /**
+     * 指定した従業員の所属部署全員が作成した日報データを、指定されたページ数の一覧画面に表示する分取得しReportViewのリストで返却する
+     * @param employee 従業員
+     * @param page ページ数
+     * @return 一覧画面に表示するデータのリスト
+     */
+    public List<ReportView> getDepartmentPerPage(EmployeeView employee, int page) {
+
+        List<Employee> employees = em.createNamedQuery(JpaConst.Q_EMP_GET_DEPARTMENT_ALL, Employee.class)
+                .setParameter(JpaConst.JPQL_PARM_DEPARTMENT_NUMBER, employee.getDepartmentNumber())
+                .getResultList();
+
+        List<Report> reports = em.createNamedQuery(JpaConst.Q_REP_GET_ALL_DEPARTMENT, Report.class)
+                .setParameter(JpaConst.JPQL_PARM_EMPLOYEE, employees)
+                .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
+                .setMaxResults(JpaConst.ROW_PER_PAGE)
+                .getResultList();
+        return ReportConverter.toViewList(reports);
+    }
+
+    /**
+     * 指定した従業員の所属部署全員が作成した日報データの件数を取得し、返却する
+     * @param employee
+     * @return 日報データの件数
+     */
+    public long countAllDepartment(EmployeeView employee) {
+
+        List<Employee> employees = em.createNamedQuery(JpaConst.Q_EMP_GET_DEPARTMENT_ALL, Employee.class)
+                .setParameter(JpaConst.JPQL_PARM_DEPARTMENT_NUMBER, employee.getDepartmentNumber())
+                .getResultList();
+
+        long count = (long) em.createNamedQuery(JpaConst.Q_REP_COUNT_ALL_DEPARTMENT, Long.class)
+                .setParameter(JpaConst.JPQL_PARM_EMPLOYEE, employees)
                 .getSingleResult();
 
         return count;

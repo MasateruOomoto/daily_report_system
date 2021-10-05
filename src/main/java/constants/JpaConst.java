@@ -49,6 +49,7 @@ public interface JpaConst {
     String JPQL_PARM_CODE = "code"; //社員番号
     String JPQL_PARM_PASSWORD = "password"; //パスワード
     String JPQL_PARM_EMPLOYEE = "employee"; //従業員
+    String JPQL_PARM_DEPARTMENT_NUMBER = "department_number";
 
     //NamedQueryの nameとquery
     //全ての従業員をidの降順に取得する
@@ -63,6 +64,19 @@ public interface JpaConst {
     //指定した社員番号を保持する従業員の件数を取得する
     String Q_EMP_COUNT_RESISTERED_BY_CODE = ENTITY_EMP + ".countRegisteredByCode";
     String Q_EMP_COUNT_RESISTERED_BY_CODE_DEF = "SELECT COUNT(e) FROM Employee AS e WHERE e.code = :" + JPQL_PARM_CODE;
+
+
+
+
+
+    //従業員の所属部署全員の情報を取得する
+    String Q_EMP_GET_DEPARTMENT_ALL = ENTITY_EMP + ".getDepartmentAll";
+    String Q_EMP_GET_DEPARTMENT_ALL_DEF = "SELECT e FROM Employee AS e WHERE e.departmentNumber = :" + JPQL_PARM_DEPARTMENT_NUMBER + " ORDER BY e.id DESC";
+
+
+
+
+
     //全ての日報をidの降順に取得する
     String Q_REP_GET_ALL = ENTITY_REP + ".getAll";
     String Q_REP_GET_ALL_DEF = "SELECT r FROM Report AS r ORDER BY r.id DESC";
@@ -76,5 +90,11 @@ public interface JpaConst {
     String Q_REP_COUNT_ALL_MINE = ENTITY_REP + ".countAllMine";
     String Q_REP_COUNT_ALL_MINE_DEF = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :" + JPQL_PARM_EMPLOYEE;
 
+    //指定した従業員の所属部署全員が作成した日報を全件idの降順で取得する
+    String Q_REP_GET_ALL_DEPARTMENT = ENTITY_REP + ".getAllDepartment";
+    String Q_REP_GET_ALL_DEPARTMENT_DEF = "SELECT r FROM Report AS r WHERE r.employee in (:" + JPQL_PARM_EMPLOYEE + ") ORDER BY r.id DESC";
+  //指定した従業員の所属部署全員が作成した日報の件数を取得する
+    String Q_REP_COUNT_ALL_DEPARTMENT = ENTITY_REP + ".countAllDepartment";
+    String Q_REP_COUNT_ALL_DEPARTMENT_DEF = "SELECT COUNT(r) FROM Report AS r WHERE r.employee in (:" + JPQL_PARM_EMPLOYEE + ")";
 
 }
