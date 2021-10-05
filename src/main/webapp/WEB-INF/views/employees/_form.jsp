@@ -30,7 +30,7 @@
 
 <label for="${AttributeConst.EMP_DEPARTMENT_NUMBER.getValue()}">所属部署</label><br />
 <select name="${AttributeConst.EMP_DEPARTMENT_NUMBER.getValue()}">
-    <option value="AttributeConst.SALES_DEPARTMENT.getValue()"<c:if test="${employee.departmentNumber == AttributeConst.HUMAN_RESOURSES_DEPARTMENT.getValue()}"> selected</c:if>>人事部</option>
+    <option value="1"<c:if test="${employee.departmentNumber == AttributeConst.HUMAN_RESOURSES_DEPARTMENT.getValue()}"> selected</c:if>>人事部</option>
     <option value="2"<c:if test="${employee.departmentNumber == AttributeConst.GENERAL_AFFAIRS_DEPARTMENT.getValue()}"> selected</c:if>>総務部</option>
     <option value="3"<c:if test="${employee.departmentNumber == AttributeConst.DEVELOPMENT_DEPARTMENT.getValue()}"> selected</c:if>>開発部</option>
     <option value="4"<c:if test="${employee.departmentNumber == AttributeConst.SALES_DEPARTMENT.getValue()}"> selected</c:if>>営業部</option>

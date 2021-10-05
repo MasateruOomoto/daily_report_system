@@ -115,7 +115,7 @@ public class EmployeeConverter {
         e.setCreatedAt(ev.getCreatedAt());
         e.setUpdatedAt(ev.getUpdatedAt());
         e.setDeleteFlag(ev.getDeleteFlag());
-
+        e.setDepartmentNumber(ev.getDepartmentNumber());
     }
 
 }
